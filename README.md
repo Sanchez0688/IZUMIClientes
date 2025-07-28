@@ -1,7 +1,7 @@
 # IZUMIClientes
 Introduction
 
-Descripción
+##Descripción
 En este repositorio se encuentra el código para la prueba del sistema IZUMI Clientes.
 
 Pasos para ejecutar la aplicación
