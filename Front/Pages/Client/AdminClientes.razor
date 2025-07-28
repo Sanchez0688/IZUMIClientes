@@ -1,0 +1,61 @@
+﻿@page "/AdminClientes"
+@inherits LayoutComponentBase
+@using MudBlazor
+@using Shared.Entities
+<div class="card mx-auto my-2" style="max-width: 100%;">
+    <div class="card-header mud-theme-primary rounded-lg d-flex justify-content-between py-1"
+         style="max-height: 35px; display: flex; align-items: center; justify-content: space-between;  margin-bottom: 1rem;">
+
+		<MudFab Label="Nuevo Cliente" OnClick="NewClienteAsync" StartIcon="@Icons.Material.Filled.Newspaper" Color="Color.Primary" Size="Size.Medium" Class="ml-auto"></MudFab>
+	
+        <div style="flex-grow: 1; text-align: center;">
+            
+        </div>
+        
+    </div>
+
+    @if (_clientes != null)
+    {
+        <MudText Typo="Typo.h6" Class="p-2 mud-theme-primary rounded-lg" Style="max-height: 35px; display: flex; align-items: center; justify-content: center;">Lista de Clientes</MudText>
+
+        <MudDataGrid Style="width: 1200px; max-height: 500px; overflow-y: auto;" Class="my-3" T="Cliente" MultiSelection="false" Items="@_clientes" SortMode="SortMode.Multiple"
+                     Dense="true" Striped="true" ColumnResizeMode="ResizeMode.Container" Culture="System.Globalization.CultureInfo.CurrentUICulture"
+                     QuickFilter="@QuickFilter" Bordered="true" Elevation="2">
+            <ToolBarContent>
+                <div style="column-count: 1; margin-bottom: 1rem">
+                    <MudTextField @bind-Value="_searchString" Placeholder="Buscar" Adornment="Adornment.Start" Immediate="true"
+                                  AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" />
+                </div>
+            </ToolBarContent>
+            <Columns>
+                <TemplateColumn Filterable="false" Title="Opciones" HeaderClass="mud-theme-primary" StickyLeft="true" >
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudTooltip Text="Actualizar">
+                                <MudFab Color="Color.Primary" Size="Size.Small" StartIcon="@Icons.Material.Filled.Edit" OnClick="@(() => UpdateClienteAsync(@context.Item.IdCliente))"></MudFab>
+                            </MudTooltip>
+                            <MudTooltip Text="Eliminar">
+                                <MudFab Color="Color.Primary" Size="Size.Small" StartIcon="@Icons.Material.Filled.Delete" OnClick="@(() => EliminarClienteAsync(@context.Item.IdCliente))"></MudFab>
+                            </MudTooltip>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+                <PropertyColumn Property="x => x.TipoDocumento.Name" Title="TipoDocumento" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.NumeroDocumento" Title="Numero Documento" HeaderClass="mud-theme-primary"  />
+                <PropertyColumn Property="x => x.PrimerNombre" Title="Primer Nombre" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.SegundoNombre" Title="Segundo Nombre" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.PrimerApellido" Title="Primer Apellido" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.SegundoApellido" Title="Segundo Apellido" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.FechaNacimiento" Title="Fecha Nacimiento" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.Email" Title="Email" HeaderClass="mud-theme-primary" />
+                <PropertyColumn Property="x => x.NumeroCelular" Title="Celular" HeaderClass="mud-theme-primary" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="Cliente" />
+            </PagerContent>
+        </MudDataGrid>
+    }
+
+
+</div>
+

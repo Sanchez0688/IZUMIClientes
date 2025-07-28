@@ -1,0 +1,92 @@
+﻿
+<div class="card mx-auto my-2">
+	<div class="card-header mud-theme-primary rounded-lg d-flex justify-content-between py-1"
+		 style="max-height: 35px; display: flex; align-items: center; justify-content: center;">
+		<div class="d-flex justify-content-center">
+			<i class="bi bi-box2" />
+			<h3 class="mb-0">Cliente @_ClienteDTO.PrimerNombre</h3>
+		</div>
+	</div>
+
+	<div class="card-body">
+		<br />
+		@if (_ClienteDTO != null && _ClienteDTO.IdCliente > 0)
+		{
+			<EditForm class="m-1" Model="@_ClienteDTO" OnValidSubmit="UpdateAsync">
+
+				<MudGrid Spacing="2" Style="max-height: 500px; max-width: 650px; overflow-y: auto; margin-bottom: 1px;">
+
+					<MudItem xs="12" sm="4">
+						<label>Tipo Documento:</label>
+						<select class="form-select" @bind="_ClienteDTO.IdTipoDocumento">
+							<option value="0">Seleccione ...</option>
+							@if (tipoDocumento is not null)
+							{
+								@foreach (var item in tipoDocumento)
+								{
+									<option value="@item.IdTipoComboDetalle">@item.Name</option>
+								}
+							}
+						</select>
+						<ValidationMessage For="@(() => _ClienteDTO.IdTipoDocumento)" />
+					</MudItem>
+
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.NumeroDocumento" MaxLength="20" Counter="20" Immediate="true" Label="Numero Documento" Variant="Variant.Text"></MudTextField>
+						<ValidationMessage For="@(() => _ClienteDTO.NumeroDocumento)" />
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.PrimerNombre" MaxLength="100" Counter="100" Immediate="true" Label="Primer Nombre" Variant="Variant.Text"></MudTextField>
+						<ValidationMessage For="@(() => _ClienteDTO.PrimerNombre)" />
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.SegundoNombre" MaxLength="100" Counter="100" Immediate="true" Label="Segundo Nombre" Variant="Variant.Text"></MudTextField>
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.PrimerApellido" MaxLength="100" Counter="100" Immediate="true" Label="Primer Apellido" Variant="Variant.Text"></MudTextField>
+						<ValidationMessage For="@(() => _ClienteDTO.PrimerApellido)" />
+					</MudItem>
+					<MudItem xs="12" sm="4">
+						<MudTextField @bind-Value="@_ClienteDTO.SegundoApellido" MaxLength="100" Counter="100" Immediate="true" Label="Segundo Apellido" Variant="Variant.Text"></MudTextField>
+					</MudItem>
+					<MudItem xs="12" sm="12">
+						<MudTextField @bind-Value="@_ClienteDTO.DireccionResidencia" MaxLength="250" Counter="250" Immediate="true" Label="Direccion Residencia" Variant="Variant.Text"></MudTextField>
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.NumeroCelular" MaxLength="15" Mask="@(new PatternMask("000 000 0000 0000"))" Immediate="true" Label="Número Celular" Variant="Variant.Text"></MudTextField>
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudDatePicker Label="Fecha Nacimiento" MaxDate="@DateTime.Today" @bind-Date="_ClienteDTO.FechaNacimiento" DateFormat="dd-MM-yyyy"></MudDatePicker>
+					</MudItem>
+					<MudItem xs="12" sm="6">
+						<MudTextField @bind-Value="@_ClienteDTO.Email" MaxLength="250" Counter="250" Immediate="true" Label="Email" Variant="Variant.Text"></MudTextField>
+					</MudItem>
+
+					<MudItem xs="12" sm="6">
+						<label>Plan:</label>
+						<select class="form-select" @bind="_ClienteDTO.IdPlanPreferencia">
+							<option value="0">Seleccione ...</option>
+							@if (planPref is not null)
+							{
+								@foreach (var item in planPref)
+								{
+									<option value="@item.IdTipoComboDetalle">@item.Name</option>
+								}
+							}
+						</select>
+						<ValidationMessage For="@(() => _ClienteDTO.IdPlanPreferencia)" />
+					</MudItem>
+
+				</MudGrid>
+				<div style="height: 16px;"></div>
+				<MudFab Label="Actualizar" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Filled.SaveAs" Color="Color.Primary" Size="Size.Small">  </MudFab>
+				<MudFab Label="Cancelar" StartIcon="@Icons.Material.Filled.ClearAll" Color="Color.Secondary" Size="Size.Small" OnClick="CancelarAsynic"></MudFab>
+
+				<DataAnnotationsValidator />
+				<ValidationSummary />
+			</EditForm>
+		}
+
+
+	</div>
+</div>
